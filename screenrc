@@ -1,0 +1,21 @@
+# don't display the copyright page
+startup_message off
+
+# set autosave off
+#shell -autosave off
+
+# keep scrollback n lines
+defscrollback 1000
+
+# to avoid mess up the terminal on vim exit
+altscreen on
+
+
+# to ensure line wrap correctly
+#termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+# enable 256 color mode
+term screen-256color
+#attrcolor b ".I"    # allow bold colors - necessary for some reason. <Janus>2015/08/09: commented out to use unbold font to be more beautiful.
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'   # tell screen how to set colors. AB = background, AF=foreground
+#defbce on    # use current bg color for erased chars
