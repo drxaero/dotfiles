@@ -1,0 +1,15 @@
+[user]
+	name = Janus Cheng
+	email = drxaero@gmail.com
+[commit]
+	gpgSign = false
+[pull]
+	rebase = false
+[gui]
+	pruneduringfetch = true
+[smartgit "submodule"]
+	fetchalways = false
+	update = true
+	initializenew = true
+[push]
+	recurseSubmodules = check
