@@ -1,2 +1,4 @@
 # vi temporary file
 *.swp
+
+Brewfile.lock.json
