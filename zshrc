@@ -22,6 +22,9 @@ alias ls='ls -FG'
 # Created by `pipx` on 2025-03-19 08:55:34
 export PATH="$PATH:~/.local/bin"
 
+# colorful man using `bat`
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
