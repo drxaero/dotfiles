@@ -9,6 +9,7 @@
     ~/.screenrc:
     ~/.vimrc:
     ~/.zshrc:
+    ~/.zshenv:
 
 #- create:
 #    - ~/downloads

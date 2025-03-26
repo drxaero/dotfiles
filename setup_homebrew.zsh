@@ -2,8 +2,14 @@
 
 echo "\n=== Starting Homebrew Setup ===\n"
 
-# copied form https://brew.sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if cmd_exists brew; then
+  echo "brew is already installed"
+else
+  echo "brew is not found, installing brew..."
+
+  # copied form https://brew.sh
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
 # 安裝 Brewfile 中的軟體, 用 `$ brew bundle dump --describe --force` 來產生 Brewfile
 brew bundle --verbose

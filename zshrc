@@ -1,3 +1,5 @@
+# Runs by interactive zsh sessions only.
+
 # Define the shell prompt
 
 # Using 'precmd' or PROMPT_SUBST is better for dynamic prompt updates
