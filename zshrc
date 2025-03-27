@@ -21,7 +21,7 @@ RPROMPT='%*'
 alias ls='eza -F'
 
 # Created by `pipx` on 2025-03-19 08:55:34
-export PATH="$PATH:~/.local/bin"
+#export PATH="$PATH:~/.local/bin"
 
 # colorful man using `bat`
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
