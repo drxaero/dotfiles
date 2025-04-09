@@ -10,6 +10,11 @@
     ~/.vimrc:
     ~/.zshrc:
     ~/.zshenv:
+    ~/.zfuncs/:
+      glob: true
+      create: true
+      path: zfuncs/*
+      relink: true
 
 #- create:
 #    - ~/downloads

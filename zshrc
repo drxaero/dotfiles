@@ -68,3 +68,8 @@ export NVM_DIR="$HOME/.nvm"
 fpath+=~/.docker/completions
 autoload -Uz compinit && compinit
 # End of Docker CLI completions
+
+# Add poetry completion by following "https://python-poetry.org/docs/"
+fpath+=~/.zfuncs/
+autoload -Uz compinit && compinit
+# End of poetry completion
