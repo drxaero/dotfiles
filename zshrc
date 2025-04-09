@@ -65,7 +65,6 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(~/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+fpath+=~/.docker/completions
+autoload -Uz compinit && compinit
 # End of Docker CLI completions
