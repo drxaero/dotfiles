@@ -178,7 +178,7 @@ set cinoptions=:.5s,>1s,p0,t0,(0,g2	" :.5s = indent case statements 1/2 shiftwid
 					" (0 = indent from unclosed parantheses
 					" g2 = indent C++ scope resolution 2 spaces
 
-set cinwords=if,else,while,do,for,switch,case	" Which keywords should indent 
+set cinwords=if,else,while,do,for,switch,case	" Which keywords should indent
 
 set formatoptions=tcqor	" t=text, c=comments, q=format with "gq", o,r=autoinsert comment leader
 set cindent				" indent on cinwords
@@ -221,8 +221,8 @@ let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
 
 " Watch changes of all files that outside vim.
-let autoreadargs={'autoread':1} 
-call WatchForChanges("*",autoreadargs) 
+let autoreadargs={'autoread':1}
+call WatchForChanges("*",autoreadargs)
 
 
 set guifont=Menlo\ Regular:h16

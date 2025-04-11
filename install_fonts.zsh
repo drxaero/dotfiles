@@ -4,4 +4,3 @@
 cd ~/Library/Fonts && {
     curl -O 'https://github.com/JetBrains/JetBrainsMono/blob/master/fonts/ttf/JetBrainsMono-Regular.ttf'
     cd -; }
-

@@ -1,0 +1,38 @@
+[project]
+name = "dotfiles"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Janus Cheng",email = "drxaero@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.2.0"
+flake8 = "^7.2.0"
+black = "^25.1.0"
+isort = "^6.0.1"
+pytest = "^8.3.5"
+pexpect = "^4.9.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# follows https://github.com/psf/black/blob/main/docs/compatible_configs/isort/pyproject.toml
+[tool.isort]
+profile = 'black'
+
+[tool.poetry-auto-export]
+output = "requirements.txt"
+without_hashes = true
+without = ["dev"]
+
+[tool.pytest.ini_options]
+log_cli = false
+log_cli_level = "DEBUG"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"

@@ -1,0 +1,123 @@
+import logging
+import os
+import re
+import shutil
+import subprocess
+from pathlib import Path
+from typing import Generator
+
+import pytest
+from pexpect import spawn
+
+logger = logging.getLogger(__name__)
+
+# Path to .zshrc
+ZSHRC_FILE = os.path.expanduser("~/.zshrc")
+
+BRANCH_NAME = "test-branch"
+
+
+def wait_for_prompt(cli: spawn, timeout: int = 1) -> str:
+    """
+    Wait for the zsh prompt to appear.
+
+    :param timeout: The timeout for waiting for the prompt.
+                    Why 1 second? Because it's the smallest number, and it works well with my mac.
+    """
+    cli.expect(r"%", timeout=timeout)  # it seems zsh sends initial % at the beginning before executing the command
+    cli.expect(r"\[\?2004h", timeout=timeout)  # bracketed paste control
+    prompt = cli.before.strip() + cli.after.strip()
+    return prompt
+
+
+@pytest.fixture(name="test_env", scope="function")
+def _test_env(tmp_path: Path) -> Generator[Path, None, None]:
+    """
+    Set up a clean test environment with a copied .zshrc.
+
+    :param tmp_path: The temporary directory provided by pytest.
+    """
+    zsh_dir = tmp_path / ".zsh"
+    zsh_dir.mkdir()
+    shutil.copy(ZSHRC_FILE, zsh_dir / ".zshrc")
+
+    # Yield the zsh_dir for use in tests
+    yield zsh_dir
+
+
+@pytest.fixture(name="git_repo", scope="function")
+def _git_repo(tmp_path: Path) -> Path:
+    """
+    Set up a temporary git repository.
+
+    :param tmp_path: The temporary directory provided by pytest.
+    """
+    commands = [
+        ["git", "init"],
+        ["git", "add", "."],
+        ["git", "commit", "-m", "initial commit"],
+        ["git", "checkout", "-b", BRANCH_NAME],
+    ]
+
+    for command in commands:
+        subprocess.run(command, cwd=tmp_path, stdout=subprocess.DEVNULL, check=True)
+
+    return tmp_path
+
+
+def run_zsh_command(zsh_dir: Path, command: str) -> str:
+    """
+    Run a command in a zsh session and return the prompt output.
+    """
+    # with (
+    #     open("/tmp/send.log", "w", encoding="utf-8") as send_log,
+    #     open("/tmp/read.log", "w", encoding="utf-8") as read_log,
+    # ):
+
+    cli = spawn(
+        "zsh", ["-i"], env={"ZDOTDIR": str(zsh_dir)}, encoding="utf-8"
+    )  # the dimensions should be large enough to avoid line wrapping
+
+    # cli.logfile_send = send_log
+    # cli.logfile_read = read_log
+
+    wait_for_prompt(cli)  # wait for the cli to be spawned
+
+    cli.sendline(command)
+    prompt = wait_for_prompt(cli)
+    logger.debug("Prompt after command: %s", prompt)
+
+    cli.close()
+    return prompt
+
+
+def test__successful_cmd__prompt_turns_green(test_env: Path):
+    """
+    Test that % is green on success.
+    """
+    prompt = run_zsh_command(test_env, "true")
+    assert re.search(r"\033\[32m%", prompt), "Green % not found on success"
+
+
+def test__failed_cmd__prompt_turns_red(test_env: Path):
+    """
+    Test that % is red on failure.
+    """
+    prompt = run_zsh_command(test_env, "false")
+    assert re.search(r"\033\[31m%", prompt), "Red % not found on failure"
+
+
+def test__under_a_git_repo__prompt_shows_branch_name(test_env: Path, git_repo: Path):
+    """
+    Test that git branch appears in a git repo.
+    """
+    prompt = run_zsh_command(test_env, f"cd {git_repo} && true")
+    assert f"[{BRANCH_NAME}]" in prompt, "Git branch not displayed"
+
+
+def test__under_a_non_git_repo__prompt_shows_no_powerline(test_env: Path):
+    """
+    Test that no git branch appears outside a git repo.
+    """
+    prompt = run_zsh_command(test_env, f"cd {test_env} && true")
+    assert "" not in prompt, "Git branch shown outside repo"
