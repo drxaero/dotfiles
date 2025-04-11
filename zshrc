@@ -6,9 +6,18 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
 }
 
+# Store exit status of the command to avoid clobbering $?
+precmd() {
+    # store the exit status of the command
+    LAST_CMD_EXIT_STATUS=$?
+
+    # Get the git branch and store it
+    GIT_BRANCH=$(parse_git_branch)
+}
+
 # Using 'precmd' or PROMPT_SUBST is better for dynamic prompt updates
 colored_dollar() {
-    if [ "$?" -eq 0 ]; then
+    if [ "$LAST_CMD_EXIT_STATUS" -eq 0 ]; then
         echo "%F{green}"
     else
         echo "%F{red}"
@@ -18,7 +27,7 @@ colored_dollar() {
 # Enable prompt substitution to allow command/function evaluation
 setopt PROMPT_SUBST
 
-PROMPT='[%F{white}%n@%m]%L:%F{blue}%1~%f/$(parse_git_branch)$(colored_dollar)%#%f '
+PROMPT='[%F{white}%n@%m]%L:%F{blue}%1~%f/${GIT_BRANCH}$(colored_dollar)%#%f '
 RPROMPT='%*'
 
 # 用 `-F` 在目錄名右邊顯示 `/`
