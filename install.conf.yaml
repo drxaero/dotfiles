@@ -21,6 +21,9 @@
 #    - ~/.vim/undo-history
 
 - shell:
+   - command: ./install_fonts.zsh
+     stdout: true
+     stderr: true
    - command: ./setup_homebrew.zsh
      stdout: true
      stderr: true

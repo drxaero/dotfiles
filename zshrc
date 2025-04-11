@@ -2,6 +2,10 @@
 
 # Define the shell prompt
 
+parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
+}
+
 # Using 'precmd' or PROMPT_SUBST is better for dynamic prompt updates
 colored_dollar() {
     if [ "$?" -eq 0 ]; then
@@ -14,14 +18,11 @@ colored_dollar() {
 # Enable prompt substitution to allow command/function evaluation
 setopt PROMPT_SUBST
 
-PROMPT='[%F{white}%n@%m]:%F{blue}%1~%f/$(colored_dollar)%#%f '
+PROMPT='[%F{white}%n@%m]%L:%F{blue}%1~%f/$(parse_git_branch)$(colored_dollar)%#%f '
 RPROMPT='%*'
 
 # 用 `-F` 在目錄名右邊顯示 `/`
 alias ls='eza -F'
-
-# Created by `pipx` on 2025-03-19 08:55:34
-#export PATH="$PATH:~/.local/bin"
 
 # colorful man using `bat`
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
