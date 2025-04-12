@@ -1,0 +1,331 @@
+# base-files version 3.9-3
+
+# To pick up the latest recommended .bashrc content,
+# look in /etc/defaults/etc/skel/.bashrc
+
+# Modifying /etc/skel/.bashrc directly will prevent
+# setup from updating it.
+
+# The copy in your home directory (~/.bashrc) is yours, please
+# feel free to customise it to create a shell
+# environment to your liking.  If you feel a change
+# would be benificial to all, please feel free to send
+# a patch to the cygwin mailing list.
+
+# User dependent .bashrc file
+
+# Environment Variables
+# #####################
+
+# TMP and TEMP are defined in the Windows environment.  Leaving
+# them set to the default Windows temporary directory can have
+# unexpected consequences.
+unset TMP
+unset TEMP
+
+# Set timezone
+export TZ="/usr/share/zoneinfo/Asia/Taipei"
+
+# Alternatively, set them to the Cygwin temporary directory
+# or to any other tmp directory of your choice
+# export TMP=/tmp
+# export TEMP=/tmp
+
+# Or use TMPDIR instead
+# export TMPDIR=/tmp
+
+# Shell Options
+# #############
+
+# See man bash for more options...
+#bjork - green
+#PS1='\[\e[32;1m\]\u@\h:\[\e[37;1m\]\w \$\[\e[0m\] '
+
+# colorful '$' based on the last exit code
+colored_dollar()
+{
+   if [ "$?" == "0" ]; then
+       echo -e '\e[0;32m$\e[0m'
+   else
+       echo -e '\e[0;31m$\e[0m'
+   fi
+}
+
+# PS1='[\[\e[37;1m\]\u@\h]:\[\e[34;1m\]\W\[\e[0m\]/\$ '
+PS1="[\[\e[37;1m\]\u@\h]:\[\e[34;1m\]\W\[\e[0m\]/"'\[`colored_dollar`\] '
+
+#grand canyon
+#PS1='\[\e[37;1m\]\u@\h:\[\e[31;1m\]\w \$\[\e[0m\] '
+
+#basic
+#PS1='\[\e[36;1m\]\u@\h:\[\e[34;1m\]\w \$\[\e[0m\] \e]2;\w\a'
+
+#export SCREENRC=/cygdrive/c/TEMP
+
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+export SHELL="bash"
+export EDITOR=vim
+#export P4PORT="p4_svr_tp:1666"
+
+
+
+
+
+#stty sane
+#export TERM=linux
+export TERM=xterm-256color
+# export TERM=xterm
+#export TERM=cygwin
+
+
+
+
+
+
+# Don't wait for job termination notification
+# set -o notify
+
+# Don't use ^D to exit
+# set -o ignoreeof
+
+# Use case-insensitive filename globbing
+# shopt -s nocaseglob
+
+# Make bash append rather than overwrite the history on disk
+# shopt -s histappend
+
+# When changing directory small typos can be ignored by bash
+# for example, cd /vr/lgo/apaache would find /var/log/apache
+# shopt -s cdspell
+
+
+# Completion options
+# ##################
+
+# These completion tuning parameters change the default behavior of bash_completion:
+
+# Define to access remotely checked-out files over passwordless ssh for CVS
+# COMP_CVS_REMOTE=1
+
+# Define to avoid stripping description in --option=description of './configure --help'
+# COMP_CONFIGURE_HINTS=1
+
+# Define to avoid flattening internal contents of tar files
+# COMP_TAR_INTERNAL_PATHS=1
+
+# If this shell is interactive, turn on programmable completion enhancements.
+# Any completions you add in ~/.bash_completion are sourced last.
+# case $- in
+#   *i*) [[ -f /etc/bash_completion ]] && . /etc/bash_completion ;;
+# esac
+#
+
+# Enabling git auto completion (available at http://git.kernel.org/cgit/git/git.git/tree/contrib/completion/git-completion.bash)
+source ~/.git-completion.bash
+
+# History Options
+# ###############
+
+# Don't put duplicate lines in the history.
+# export HISTCONTROL="ignoredups"
+
+# Ignore some controlling instructions
+# HISTIGNORE is a colon-delimited list of patterns which should be excluded.
+# The '&' is a special pattern which suppresses duplicate entries.
+# export HISTIGNORE=$'[ \t]*:&:[fb]g:exit'
+# export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:ls' # Ignore the ls command as well
+
+# Whenever displaying the prompt, write the previous line to disk
+# export PROMPT_COMMAND="history -a"
+
+
+# Aliases
+# #######
+
+# Some example alias instructions
+# If these are enabled they will be used instead of any instructions
+# they may mask.  For example, alias rm='rm -i' will mask the rm
+# application.  To override the alias instruction use a \ before, ie
+# \rm will call the real rm not the alias.
+
+# Interactive operation...
+# alias rm='rm -i'
+# alias cp='cp -i'
+# alias mv='mv -i'
+
+# Default to human readable figures
+# alias df='df -h'
+# alias du='du -h'
+
+# Misc :)
+# alias less='less -r'                          # raw control characters
+# alias whence='type -a'                        # where, of a sort
+alias grep='grep --color'                     # show differences in colour
+
+# Some shortcuts for different directory listings
+alias ls='ls -F --color=tty'                 # classify files in colour
+alias make='colormake'
+alias vi='vim'
+
+# Colorize svn
+#alias svn=~/scripts/svn-color.sh
+
+# alias dir='ls --color=auto --format=vertical'
+# alias vdir='ls --color=auto --format=long'
+# alias ll='ls -l'                              # long list
+# alias la='ls -A'                              # all but . and ..
+# alias l='ls -CF'                              #
+
+
+# Functions
+# #########
+
+# Some example functions
+# function settitle() { echo -ne "\e]2;$@\a\e]1;$@\a"; }
+
+# Colorize svn
+#function svn
+#{
+#	# rebuild args to get quotes right
+#	CMD=
+#	for i in "$@"
+#	do
+#		if [[ "$i" =~ \  ]]
+#		then
+#			CMD="$CMD \"$i\""
+#		else
+#			CMD="$CMD $i"
+#		fi
+#	done
+#
+#	# pad with spaces to strip --nocol
+#	CMD=" $CMD "
+#	CMDLEN=${#CMD}
+#
+#	# parse disabling arg
+#	CMD="${CMD/ --nocol / }"
+#
+#	# check if disabled
+#	test "$CMDLEN" = "${#CMD}"
+#	NOCOL=$?
+#	if [ "$SVN_COLOR" != "always" ] && ( [ $NOCOL = 1 ] || [ "$SVN_COLOR" = "never" ] || [ ! -t 1 ] )
+#	then
+#		eval $(which svn) $CMD
+#		return
+#	fi
+#
+#	# supported svn actions for "status-like" output
+#	ACTIONS="add|checkout|co|cp|del|export|remove|rm|st"
+#	ACTIONS="$ACTIONS|merge|mkdir|move|mv|ren|sw|up"
+#
+#	# actions that outputs "status-like" data
+#	if [[ "$1" =~ ^($ACTIONS) ]]
+#	then
+#		eval $(which svn) $CMD | while IFS= read -r RL
+#		do
+#            # modified (front: light blue)
+#			if   [[ $RL =~ ^\ ?M ]]; then C="\033[34m\033[1m";
+#
+#            # conflict (back: red, front: white)
+#			elif [[ $RL =~ ^\ ?C ]]; then C="\033[41m\033[37m\033[1m";
+#
+#            # addition (front: light green)
+#			elif [[ $RL =~ ^A ]]; then C="\033[32m\033[1m";
+#
+#            # deletion (front: light red)
+#			elif [[ $RL =~ ^D ]]; then C="\033[31m\033[1m";
+#
+#            # external definition (front: white)
+#			elif [[ $RL =~ ^X ]]; then C="\033[37m";
+#
+#            # missing (back: yellow, front: white)
+#			elif [[ $RL =~ ^! ]]; then C="\033[43m\033[37m\033[1m";
+#
+#            # ignored (front: yellow)
+#			elif [[ $RL =~ ^I ]]; then C="\033[33m";
+#
+#            # replaced (front: purple)
+#			elif [[ $RL =~ ^R ]]; then C="\033[35m";
+#			else C=
+#			fi
+#
+#			echo -e "$C${RL/\\/\\\\}\033[0m\033[0;0m"
+#		done
+#
+#	# actions that outputs "diff-like" data
+##elif [[ "$1" =~ ^diff ]]
+##	then
+##		eval $(which svn) $CMD | while IFS= read -r RL
+##		do
+##			if   [[ $RL =~ ^Index:\  ]]; then C="\033[34m\033[1m";
+##			elif [[ $RL =~ ^@@ ]]; then C="\033[37m";
+##
+##			# removed
+##			elif [[ $RL =~ ^-\<\<\< ]]; then C="\033[31m\033[1m";
+##			elif [[ $RL =~ ^-\>\>\> ]]; then C="\033[31m\033[1m";
+##			elif [[ $RL =~ ^-=== ]]; then C="\033[31m\033[1m";
+##			elif [[ $RL =~ ^- ]]; then C="\033[31m";
+##
+##			# added
+##			elif [[ $RL =~ ^\+\<\<\< ]]; then C="\033[32m\033[1m";
+##			elif [[ $RL =~ ^\+\>\>\> ]]; then C="\033[32m\033[1m";
+##			elif [[ $RL =~ ^\+=== ]]; then C="\033[32m\033[1m";
+##			elif [[ $RL =~ ^\+ ]]; then C="\033[32m";
+##
+##			else C=
+##			fi
+##
+##			echo -e "$C${RL/\\/\\\\}\033[0m\033[0;0m"
+##		done
+#	else
+#		eval $(which svn) $CMD
+#	fi
+#}
+
+###########################
+# Chromium OS
+###########################
+#export PATH=~/scripts/:~/bin/:/cygdrive/c/Users/janus/AppData/Local/Android/ndk/android-ndk-r10e/:"$PATH"
+#
+#PERL_MB_OPT="--install_base \"/cygdrive/c/Users/Janus/Documents/unix_home/perl5\""; export PERL_MB_OPT;
+#PERL_MM_OPT="INSTALL_BASE=/cygdrive/c/Users/Janus/Documents/unix_home/perl5"; export PERL_MM_OPT;
+export PATH=~/.local/bin/:"$PATH"
+
+###########################
+# Start ssh-agent when login
+###########################
+#SSH_ENV=$HOME/.ssh/environment
+#
+## start the ssh-agent
+#function start_agent {
+#   echo -n "Initializing new SSH agent... "
+#   # spawn ssh-agent
+#   /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#   echo "[succeeded]"
+#   chmod 600 "${SSH_ENV}"
+#   . "${SSH_ENV}" > /dev/null
+#   /usr/bin/ssh-add
+#}
+#
+#if [ -f "${SSH_ENV}" ]; then
+#   . "${SSH_ENV}" > /dev/null
+#   ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#      start_agent;
+#   }
+#else
+#   start_agent;
+#fi
+#
+############################
+## Kill ssh-agent when logout
+############################
+#trap 'test -n "$SSH_AGENT_PID" && eval `/usr/bin/ssh-agent -k`' 0
+#
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
