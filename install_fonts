@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # install the "JetBrainsMono-Regular.ttf" for the powerline symbol '' ('\uE0A0')
 cd ~/Library/Fonts && {
