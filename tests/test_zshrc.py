@@ -12,7 +12,7 @@ from pexpect import spawn
 logger = logging.getLogger(__name__)
 
 # Path to .zshrc
-ZSHRC_FILE = Path(__file__).parent.parent / "zshrc"
+ZSHRC_FILE = Path(__file__).parent.parent / "apps" / "zsh" / "zshrc"
 
 BRANCH_NAME = "test-branch"
 

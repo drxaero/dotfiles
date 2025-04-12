@@ -5,25 +5,20 @@
 - clean: ['~']
 
 - link:
-    ~/.gitconfig:
-    ~/.screenrc:
-    ~/.vimrc:
-    ~/.zshrc:
-    ~/.zshenv:
+    ~/.gitconfig: apps/git/gitconfig
+    ~/.screenrc: apps/screen/screenrc
+    ~/.vimrc: apps/vim/vimrc
+    ~/.zshrc: apps/zsh/zshrc
+    ~/.zshenv: apps/zsh/zshenv
     ~/.zfuncs/:
       glob: true
       create: true
-      path: zfuncs/*
-      relink: true
-
-#- create:
-#    - ~/downloads
-#    - ~/.vim/undo-history
+      path: apps/zsh/zfuncs/*
 
 - shell:
-   - command: ./install_fonts
-     stdout: true
-     stderr: true
-   - command: ./setup_homebrew.zsh
-     stdout: true
-     stderr: true
+    - command: ./apps/zsh/install_fonts
+      stdout: true
+      stderr: true
+    - command: cd ./apps/homebrew/ && ./setup_homebrew
+      stdout: true
+      stderr: true
