@@ -225,4 +225,4 @@ let autoreadargs={'autoread':1}
 call WatchForChanges("*",autoreadargs)
 
 
-set guifont=Menlo\ Regular:h16
+set guifont=JetBrains\ Mono:h16

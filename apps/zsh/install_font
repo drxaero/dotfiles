@@ -2,5 +2,5 @@
 
 # install the "JetBrainsMono-Regular.ttf" for the powerline symbol '' ('\uE0A0')
 cd ~/Library/Fonts && {
-    curl -O 'https://github.com/JetBrains/JetBrainsMono/blob/master/fonts/ttf/JetBrainsMono-Regular.ttf'
+    curl -O 'https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf'
     cd -; }

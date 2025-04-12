@@ -16,7 +16,7 @@
       path: apps/zsh/zfuncs/*
 
 - shell:
-    - command: ./apps/zsh/install_fonts
+    - command: ./apps/zsh/install_font
       stdout: true
       stderr: true
     - command: cd ./apps/homebrew/ && ./setup_homebrew
