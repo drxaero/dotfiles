@@ -10,6 +10,7 @@
     ~/.vimrc: apps/vim/vimrc
     ~/.zshrc: apps/zsh/zshrc
     ~/.zshenv: apps/zsh/zshenv
+    ~/.zprofile: apps/zsh/zprofile
     ~/.zfuncs/:
       glob: true
       create: true
