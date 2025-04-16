@@ -36,6 +36,11 @@ alias ls='eza -F'
 # colorful man using `bat`
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 
+# make the 'null' of jq command readable
+export JQ_COLORS="1;90:1;34:0;34:1;36:0;33:1;37:1;37"       # from "https://www.azurecitadel.com/terraform/environments/macos/"
+# export JQ_COLORS="2;33:2;33:0;33:0;36:1;32:0;35:1;35:2;34"  # from "https://stackoverflow.com/a/77322205/13852625"
+# export JQ_COLORS="0;31:0;36:0;36:0;35:0;32:2;37:2;37"       # from "https://github.com/roblav96/dotfiles/blob/master/zshrc.sh"
+
 #############################
 # Start ssh-agent when login
 #############################
