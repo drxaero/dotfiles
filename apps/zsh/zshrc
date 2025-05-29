@@ -1,6 +1,6 @@
 # Runs by interactive zsh sessions only.
 
-# Define the shell prompt
+# ==== Define the shell prompt ====
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
@@ -30,6 +30,10 @@ setopt PROMPT_SUBST
 PROMPT='[%F{white}%n@%m]%L:%F{blue}%1~%f/${GIT_BRANCH}$(colored_dollar)%#%f '
 RPROMPT='%*'
 
+# ==== PATH ====
+export PATH="$PATH:$HOME/scripts"
+
+# ==== aliases ====
 # 用 `-F` 在目錄名右邊顯示 `/`
 alias ls='eza -F'
 
@@ -42,38 +46,7 @@ alias jq='jq -e'
 # make the 'null' of `jq` command readable
 export JQ_COLORS="1;90:1;34:0;34:1;36:0;33:1;37:1;37"       # from "https://www.azurecitadel.com/terraform/environments/macos/"
 
-#############################
-# Start ssh-agent when login
-#############################
-#SSH_ENV=$HOME/.ssh/environment
-#
-## start the ssh-agent
-#function start_agent {
-#   echo -n "Initializing new SSH agent... "
-#   # spawn ssh-agent
-#   /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-#   echo "[succeeded]"
-#   chmod 600 "${SSH_ENV}"
-#   . "${SSH_ENV}" > /dev/null
-#
-#   # specify which private keys to add
-#   /usr/bin/ssh-add $HOME/.ssh/id_rsa
-#}
-#
-#if [ -f "${SSH_ENV}" ]; then
-#   . "${SSH_ENV}" > /dev/null
-#   ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-#      start_agent;
-#   }
-#else
-#   start_agent;
-#fi
-#
-############################
-## Kill ssh-agent when logout
-############################
-#trap 'test -n "$SSH_AGENT_PID" && eval `/usr/bin/ssh-agent -k`' 0
-
+# ==== completions ====
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

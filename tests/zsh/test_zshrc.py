@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 import shutil
 import subprocess
@@ -7,6 +8,7 @@ from pathlib import Path
 from typing import Generator
 
 import pytest
+from parametrization import Parametrization
 from pexpect import spawn
 
 logger = logging.getLogger(__name__)
@@ -130,3 +132,26 @@ def test__under_a_non_git_repo__prompt_shows_no_powerline(test_env: Path):
     """
     prompt = run_zsh_command(test_env, f"cd {test_env} && true")
     assert "" not in prompt, "Git branch shown outside repo"
+
+
+@Parametrization.autodetect_parameters()
+@Parametrization.case(
+    name="`get_remote_brew_pkg_size` in `scripts/`", script_name="get_remote_brew_pkg_size", found=True
+)
+@Parametrization.case(name="non existent script", script_name="non_existent_script", found=False)
+def test__can_find_a_script_in_path(script_name: str, found: bool):
+    """
+    Test that a script can be found in the PATH.
+    """
+    script_path = shutil.which(script_name)
+
+    if found:
+        assert script_path is not None, f"Script {script_name} not found in PATH, expected to be found"
+        assert (
+            script_name in script_path
+        ), f"Script path {script_path} does not contain expected script name {script_name}"
+        # Verify executable permission
+        if not os.access(script_path, os.X_OK):
+            pytest.fail(f"Script {script_name} found at {script_path} but is not executable")
+    else:
+        assert script_path is None, f"Script {script_name} was found at {script_path}, expected not to be found"
