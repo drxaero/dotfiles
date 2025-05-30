@@ -88,7 +88,6 @@ def run_zsh_command(zsh_dir: Path, command: str) -> str:
         encoding="utf-8",
         codec_errors="ignore",  # if you can pass the GitHub Actions test, you can remove `codec_errors="ignore"`
     )  # the dimensions should be large enough to avoid line wrapping
-
     # cli.logfile_send = send_log
     # cli.logfile_read = read_log
 
@@ -135,23 +134,28 @@ def test__under_a_non_git_repo__prompt_shows_no_powerline(test_env: Path):
 
 
 @Parametrization.autodetect_parameters()
-@Parametrization.case(
-    name="`get_remote_brew_pkg_size` in `scripts/`", script_name="get_remote_brew_pkg_size", found=True
-)
-@Parametrization.case(name="non existent script", script_name="non_existent_script", found=False)
-def test__can_find_a_script_in_path(script_name: str, found: bool):
+@Parametrization.case(name="`$HOME/scripts` is found", folder="~/scripts", found=True)
+@Parametrization.case(name="non_existent_folder is not found", folder="~/non_existent_folder", found=False)
+def test__can_find_a_folder_in_path(test_env: Path, folder: str, found: bool):
     """
-    Test that a script can be found in the PATH.
+    Test that a folder can be found in the $PATH.
     """
-    script_path = shutil.which(script_name)
+    expanded_folder = os.path.expanduser(folder)
 
-    if found:
-        assert script_path is not None, f"Script {script_name} not found in PATH, expected to be found"
-        assert (
-            script_name in script_path
-        ), f"Script path {script_path} does not contain expected script name {script_name}"
-        # Verify executable permission
-        if not os.access(script_path, os.X_OK):
-            pytest.fail(f"Script {script_name} found at {script_path} but is not executable")
-    else:
-        assert script_path is None, f"Script {script_name} was found at {script_path}, expected not to be found"
+    # Use subprocess.run to fork a zsh shell, source the temp .zshrc, and echo $PATH
+    temp_zshrc = test_env / ".zshrc"
+    path_dirs = (
+        subprocess.run(
+            ["zsh", "-c", f"source {temp_zshrc} && echo $PATH"],
+            capture_output=True,  # Capture stdout and stderr
+            text=True,  # Return output as string, not bytes
+            check=True,  # Raise an exception if the command fails
+        )
+        .stdout.strip()
+        .split(os.pathsep)
+    )
+    is_in_path = expanded_folder in path_dirs
+    assert (
+        is_in_path == found
+    ), f"Expected folder '{expanded_folder}' to be {'in' if found else 'not in'} $PATH, but it was{
+        ' not' if found else ''}."
