@@ -52,7 +52,7 @@ colored_dollar()
 }
 
 # PS1='[\[\e[37;1m\]\u@\h]:\[\e[34;1m\]\W\[\e[0m\]/\$ '
-PS1="[\[\e[37;1m\]\u@\h]:\[\e[34;1m\]\W\[\e[0m\]/"'\[`colored_dollar`\] '
+PS1="[\[\e[37;1m\]\u@\h]$SHLVL:\[\e[34;1m\]\W\[\e[0m\]/"'\[`colored_dollar`\] '
 
 #grand canyon
 #PS1='\[\e[37;1m\]\u@\h:\[\e[31;1m\]\w \$\[\e[0m\] '
@@ -63,9 +63,9 @@ PS1="[\[\e[37;1m\]\u@\h]:\[\e[34;1m\]\W\[\e[0m\]/"'\[`colored_dollar`\] '
 #export SCREENRC=/cygdrive/c/TEMP
 
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANG=en_US.UTF-8
+#export LC_ALL=en_US.UTF-8
+#export LANG=en_US.UTF-8
+#export LANG=en_US.UTF-8
 export SHELL="bash"
 export EDITOR=vim
 #export P4PORT="p4_svr_tp:1666"
