@@ -7,4 +7,6 @@ __pycache__
 # vi temporary file
 *.swp
 
+.ruff_cache
+
 Brewfile.lock.json
