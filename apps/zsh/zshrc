@@ -65,4 +65,5 @@ fpath+=~/.zfuncs/
 autoload -Uz compinit && compinit
 # End of poetry completion
 
-source <(kubectl completion zsh)
+# Temporarily removed `kubectl`
+# source <(kubectl completion zsh)
